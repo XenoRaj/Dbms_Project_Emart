@@ -1,0 +1,65 @@
+h1{
+    text-align: center;
+}
+.mega{
+    padding: 50px 90px;
+    width: 80%; /* Adjust width as needed */
+    margin: 0 auto;
+    border: 3px solid black;
+    border-radius: 10px;
+    overflow:hidden;
+    transform: translateY(45%);
+}
+.container{
+    transform: translateX(35%);
+    margin-right: 20px; /* Adjust margin between containers */
+}
+.MainButton {
+    padding: auto;
+    float: left;
+    margin-right: 50px;
+    text-align: center;
+    border-radius: 10px;
+    border: 3px solid white;
+    background-color: black;
+    color: white;
+    padding: 10px 58px;
+}
+
+.container img {
+    width: 100%;
+    height: auto;
+    max-width: 200px; /* Adjust image width as needed */
+}
+
+.MainButton:hover{
+    background-color: rgb(134, 194, 246);
+    color: black;
+    cursor: pointer;
+    transition-duration: 0.5s;
+}
+.Form input{
+    display: block;
+    padding:4px 2px;
+    border:solid 1px #aacfe4;
+    width:75%;
+    margin:2px 0 20px 10px;
+}
+
+.middleButton{
+    padding: auto;
+    transform: translateX(640%);
+    float:left
+}
+#binaryForm{
+    clear: both;
+    border: 20px;
+    padding: 5px 30px;
+    float: inline-start;
+    display: block;
+    position: relative;
+}
+#backImage{
+    width: 40px;
+    height: 40px;
+}
