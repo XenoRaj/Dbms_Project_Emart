@@ -1,5 +1,61 @@
-{% extends "base.html" %} {% block title %}Home{% endblock %} {% block content
-    %}
-    <h1 align="center">Orders</h1>
-   
-    {% endblock %}
+{% extends "base.html" %}
+
+{% block title %}Home{% endblock %}
+
+{% block content %}
+<h1>Order Items Now!</h1>
+
+<div class="row">
+    {% for item in items %}
+    <div class="col-md-4 mb-4">
+        <div class="card">
+            <img src="{{ url_for('static', filename='images/' + item.lower() + '.jpeg') }}" class="card-img-top" alt="{{ item }}">
+            <div class="card-body">
+                <h5 class="card-title">{{ item}}</h5>
+                <p class="card-text">{{ item }}</p>
+                <button class="btn btn-primary order-item" data-item="{{ item }}">Order</button>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+
+<script>
+    // JavaScript to handle ordering action
+    document.addEventListener('DOMContentLoaded', function () {
+        const orderItems = document.querySelectorAll('.order-item');
+        orderItems.forEach(item => {
+            item.addEventListener('click', function (event) {
+                event.preventDefault();
+                const selectedItem = this.dataset.item;
+                orderItem(selectedItem);
+            });
+        });
+
+        function orderItem(item) {
+            fetch('/order-item', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ item: item })
+            })
+            .then(response => {
+                if (response.ok) {
+                    return response.json();
+                } else {
+                    throw new Error('Failed to order item.');
+                }
+            })
+            .then(data => {
+                alert(data.message); // Display success message
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('Failed to order item. Please try again later.');
+            });
+        }
+    });
+</script>
+
+{% endblock %}

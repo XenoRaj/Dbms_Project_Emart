@@ -1,0 +1,12 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Pre-Login Page</title>
+</head>
+<body>
+    <h1>Welcome!</h1>
+    <p>You need to login or sign up to continue:</p>
+    <a href="{{ url_for('auth.login') }}"><button>Customer</button></a>
+    <a href="{{ url_for('auth.manager_login') }}"><button>Manager</button></a>
+</body>
+</html>
