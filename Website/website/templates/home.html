@@ -1,5 +1,95 @@
-{% extends "base.html" %} {% block title %}Home{% endblock %} {% block content
-    %}
-    <h1 align="center">Orders</h1>
-   
-    {% endblock %}
+{% extends "base.html" %}
+
+{% block title %}Home{% endblock %}
+
+{% block content %}
+<h1>Order Items Now!</h1>
+
+<div class="row">
+    {% for item in items %}
+    <div class="col-md-4 mb-4">
+        <div class="card">
+            <img src="{{ url_for('static', filename='images/' + item.lower() + '.jpeg') }}" class="card-img-top" alt="{{ item }}">
+            <div class="card-body">
+                <h5 class="card-title">{{ item}}</h5>
+                <p class="card-text">{{ item }}</p>
+                <button class="btn btn-primary order-item" data-item="{{ item }}">Order</button>
+                <button class="btn btn-success add-to-cart" data-item="{{ item }}">Add to Cart</button>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const orderItems = document.querySelectorAll('.order-item');
+        orderItems.forEach(item => {
+            item.addEventListener('click', function (event) {
+                event.preventDefault();
+                const selectedItem = this.dataset.item;
+                orderItem(selectedItem);
+            });
+        });
+
+        function orderItem(item) {
+            fetch('/order-item', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ item: item })
+            })
+            .then(response => {
+                if (response.ok) {
+                    return response.json();
+                } else {
+                    throw new Error('Failed to order item.');
+                }
+            })
+            .then(data => {
+                alert(data.message); 
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('Failed to order item. Please try again later.');
+            });
+        }
+
+
+        const addToCartButtons = document.querySelectorAll('.add-to-cart');
+        addToCartButtons.forEach(button => {
+            button.addEventListener('click', function (event) {
+                event.preventDefault();
+                const selectedItem = this.dataset.item;
+                addToCart(selectedItem);
+            });
+        });
+
+        function addToCart(item) {
+            fetch('/add-to-cart', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ item: item })
+            })
+            .then(response => {
+                if (response.ok) {
+                    return response.json();
+                } else {
+                    throw new Error('Failed to add item to cart.');
+                }
+            })
+            .then(data => {
+                alert(data.message); 
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('Failed to add item to cart. Please try again later.');
+            });
+        }
+    });
+</script>
+
+{% endblock %}
